@@ -5,17 +5,26 @@ use SunAsterisk\Chatwork\Endpoints\IncomingRequests;
 
 class IncomingRequestsTest extends TestCase
 {
+    protected $response;
+    protected $requestId;
+
+    protected function setUp(): void
+    {
+        $response = $this->getMockResponse('incomingrequests');
+        $resquestId = $this->response['requestId'];
+    }
+
     public function testGetIncomingRequests()
     {
         /** @var Chatwork $api */
-        $api = $this->getAPIMock();
+        $api = m::mock(Chatwork::class);
         $api->shouldReceive('get')
             ->with('incoming_requests')
-            ->andReturns(['response']);
+            ->andReturns($this->response['incomingrequests']);
 
-        $incomingRequests = new IncomingRequests($api);
+        $incomingrequests = new IncomingRequests($api);
 
-        $this->assertEquals(['response'], $incomingRequests->list());
+        $this->assertEquals($this->response['incomingrequests'], $incomingrequests->getIncomingRequests());
     }
 
     public function testAcceptContactRequest()
