@@ -1,6 +1,5 @@
 <?php
 
-use SunAsterisk\Chatwork\Chatwork;
 use SunAsterisk\Chatwork\Endpoints\Rooms;
 
 class RoomsTest extends TestCase
@@ -10,7 +9,10 @@ class RoomsTest extends TestCase
         $response = $this->getMockResponse('rooms/getRooms');
 
         /** @var Chatwork $api */
+
         $api = $this->getAPIMock();
+        $api = m::mock(Chatwork::class);
+
         $api->shouldReceive('get')->with('rooms')->andReturns($response);
 
         $rooms = new Rooms($api);
