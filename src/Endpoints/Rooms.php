@@ -17,6 +17,7 @@ class Rooms extends Endpoint
     /**
      * Create new room
      *
+     *
      * @see http://developer.chatwork.com/vi/endpoint_rooms.html#POST-rooms
      */
     public function create(array $params)
